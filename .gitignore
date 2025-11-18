@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+# enviromental
+*.env
+
 # Log file
 *.log
 
