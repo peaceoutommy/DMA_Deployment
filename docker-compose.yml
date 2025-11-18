@@ -6,6 +6,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DATASOURCE_PASSWORD}
       MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${DATASOURCE_PASSWORD}
     ports:
       - "3307:3306"
@@ -23,8 +24,16 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-    env_file:
-      - .env
+    environment:
+      - SPRING_DATASOURCE_URL=${DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
+      - CLOUDINARY_URL=${CLOUDINARY_URL}
+      - STIPE_PUB_KEY=${STIPE_PUB_KEY}
+      - STRIPE_PRIV_KEY=${STRIPE_PRIV_KEY}
+      - STRIPE_WEBHOOK_PRIV=${STRIPE_WEBHOOK_PRIV}
     ports:
       - "8080:8080"
     networks:
@@ -37,7 +46,7 @@ services:
     ports:
       - "3000:80"
     environment:
-      - VITE_API_URL=http://localhost:8080
+      - VITE_API_URL=${VITE_API_URL}
     networks:
       - dma-network
 
